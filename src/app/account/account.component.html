@@ -1,0 +1,91 @@
+<div class="container mt-2">
+
+
+    <div class="card">
+
+        <div class="card-header">Search accounts</div>
+        <div class="card-body">
+
+            <form class="d-flex" (ngSubmit)="searchAccounts()">
+                <label class="input-group-text me-2">Account ID:</label>
+                <input class="form-control me-2" [(ngModel)]="searchTerm" name="searchTerm" type="text"
+                    placeholder="f67e1110-16ea-4628-ae6d-28db99f0bafe">
+                <button class="btn btn-success" type="submit">Search</button>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="container mt-2" *ngIf="operations">
+
+            <div class="card">
+        
+                <div class="card-header">Account history </div>
+                <div class="card-body">
+        
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Amount (€)</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (op of operations; track $index) {
+                                <tr>
+                                    <td>{{ op.amount | number:'1.2-2' }}</td>
+                                    <td>{{ op.type }}</td>
+                                    <td>{{ op.description }}</td>
+                                    <td>{{ op.operationDate | date }}</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+        
+                </div>
+        
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6" *ngIf="overview">
+
+        <div class="container mt-2">
+            <div class="card border-top border-bottom border-3" style="border-color: #3fece0 !important;">
+                <div class="card-body p-5">
+      
+                  <p class="lead fw-bold mb-5" style="color: #4b34bc;">Name: {{ overview.customerDto?.name }}</p>
+      
+                  <div class="row">
+                    <div class="col mb-3">
+                      <p class="small text-muted mb-1">Created at</p>
+                      <p>{{ overview.createdAt | date }}</p>
+                    </div>
+                    <div class="col mb-3">
+                      <p class="small text-muted mb-1">Account Type</p>
+                      <p>{{ overview.type }}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-6">
+                        <p class="small text-muted mb-1">Account No.</p>
+                        <p>{{ overview.id }}</p>
+                    </div>
+                  </div>
+      
+                  <p class="lead fw-bold mb-4 pb-2" style="color: #26dc57;">Balance: € {{ overview.balance | number:'1.2-2'}}</p>
+      
+      
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

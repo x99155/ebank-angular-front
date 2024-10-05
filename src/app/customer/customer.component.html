@@ -1,0 +1,65 @@
+<div class="col-md-10 mx-auto">
+
+    <div class="card">
+
+        <!-- <div class="text-danger" *ngIf="errorMessage">
+            {{ errorMessage | json }}
+        </div> -->
+
+        <!--
+        Dans la partie UI, chaque fois que l'on communique avec le backend il y a trois scénarios:
+        - success
+        - failure
+        - loading
+        -->
+        <ng-container *ngIf="customers; else failureOrLoading">
+
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <button class="btn btn-primary" routerLink="/new-customer">New customer</button>
+                
+                <form class="d-flex ms-auto" (ngSubmit)="searchCustomers()">
+                <input class="form-control me-2" [(ngModel)]="searchTerm" name="searchTerm" type="search" placeholder="Try Boris">
+                <button class="btn btn-success" type="submit">Search</button>
+                </form>
+            </div>
+            
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let cust of customers">
+                            <td>{{ cust.name }}</td>
+                            <td>{{ cust.email }}</td>
+                            <td>
+                                <button class="btn btn-danger" (click)="deleteCustomer(cust)">Delete</button>
+                                <button class="btn btn-info m-2" [routerLink]="['/customers', cust.id]">Update</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </ng-container>
+
+        <ng-template #failureOrLoading>
+            <ng-container *ngIf="errorMessage; else loading">
+                <div class="text-danger">
+                    {{ errorMessage }}
+                </div>
+            </ng-container>
+
+            <ng-template #loading>
+                Loading ...
+            </ng-template>
+        </ng-template>
+        
+        
+    </div>
+
+</div>

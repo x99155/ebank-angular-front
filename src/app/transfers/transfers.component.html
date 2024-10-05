@@ -1,0 +1,63 @@
+<div class="container mt-2">
+
+    <!-- <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6"></div>
+    </div> -->
+
+    <div class="card">
+
+        <div class="card-header">Transfer money <span class="blockquote-footer">Only transfers to current accounts are currently available.</span></div>
+        <div class="card-body">
+
+            <form (ngSubmit)="transaction()">
+
+                <div class="d-flex">
+                    <label class="input-group-text me-2">Operation type:</label>
+                    <select class="form-select me-2" aria-label="Default select example" name="operationType" [(ngModel)]="transactionForm.operationType">
+                        <option [ngValue]="null">Choose operation</option>
+                        <option [ngValue]="'DEBIT'">Debit</option>
+                        <option [ngValue]="'CREDIT'">Credit</option>
+                        <option [ngValue]="'TRANSFER'">Transfer</option>
+                    </select>
+
+                    <!--*ngIf="transactionForm.operationType === 'TRANSFER'"-->
+                    @if (transactionForm.operationType === 'TRANSFER') {
+                        <label class="input-group-text me-2">From:</label>
+                        <select class="form-select me-2" aria-label="Default select example" name="accountSource" [(ngModel)]="transactionForm.accountSource">
+                            <option selected>Choose sender</option>
+                            <option *ngFor="let account of currentAccounts" [value]="account.id">{{ account.customerDto?.name }}</option>
+                        </select>
+
+                        <label class="input-group-text me-2">To:</label>
+                        <select class="form-select me-2" aria-label="Default select example" name="accountDestination" [(ngModel)]="transactionForm.accountDestination">
+                            <option selected>Choose receiver</option>
+                            <option *ngFor="let account of currentAccounts" [value]="account.id">{{ account.customerDto?.name }}</option>
+                        </select>
+                    } @else if (transactionForm.operationType === 'DEBIT' || transactionForm.operationType === 'CREDIT') {
+                        <label class="input-group-text me-2">Account:</label>
+                        <select class="form-select me-2" aria-label="Default select example" name="accountSource" [(ngModel)]="transactionForm.accountSource">
+                            <option selected>Choose account</option>
+                            <option *ngFor="let account of currentAccounts" [value]="account.id">{{ account.customerDto?.name }}</option>
+                        </select>
+                    }
+                    
+                    
+                    
+                </div>
+
+                <div class="d-flex mt-2">
+                    <label class="input-group-text me-2">Amount:</label>
+                    <input class="form-control me-2"  name="amount" type="text" placeholder="99.99" [(ngModel)]="transactionForm.amount">
+
+                    <label class="input-group-text me-2">Description:</label>
+                    <input class="form-control me-2"  name="description" type="text" placeholder="For school" [(ngModel)]="transactionForm.description">
+                </div>
+                
+                <button class="btn btn-success mt-2" type="submit">Proceed transaction</button>
+            </form>
+
+        </div>
+
+    </div>
+</div>
